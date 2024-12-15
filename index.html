@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+<head>
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="./js/script.js"></script>
+    <meta charset="UTF-8" />
+    <title>Qs Simulator</title>
+</head>
+<body>
+    <div id="instructionsContainer">
+        <ul>
+            <li>Pretend that lumby is you holding a prayer inside the wave.
+            <br>
+            <li>Click to show the lobby. Try to trou by clicking on the ladder.
+            <br>
+            <li>Doing a successful trou (red x'ing the ladder and not being late) will add to your streak.
+            <br>
+            <li>Development ongoing</li>
+        </ul>
+    </div>
+
+    <div class="slider-container">
+        <div class="slider">
+            <label for="ping">Ping</label>
+            <input autocomplete="off" type="range" id="ping" min="0" max="400" value="50">
+            <div class="values">
+                <span>0</span>
+                <span id="ping-value">50 ms</span>
+                <span>400</span>
+            </div>
+        </div>
+
+        <div class="slider">
+            <label for="load-time">Load Time</label>
+            <input autocomplete="off" type="range" id="load-time" min="0" max="200" step="20" value="20">
+            <div class="values">
+                <span>0</span>
+                <span id="load-time-value">20 ms</span>
+                <span>200</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="session-info">
+        <div id="hiscoreDisplay">Highest streak: 0</div>
+        <div id="previousDisplay">Previous streak: 0</div>
+        <div id="counterDisplay">Current streak: 0</div>
+    </div>
+
+    <div id="canvasesdiv" style="position:relative; width:783px; height:566px">
+        <canvas id="layer1"
+            style="z-index: 1; position:absolute; left:0px; top:0px;"
+            height="566px" width="783">
+            This text is displayed if your browser does not support HTML5 Canvas.
+        </canvas>
+        <canvas id="layer2"
+            style="z-index: 2; position:absolute; left:579px; top:291px;"
+            height="275px" width="204">
+            This text is displayed if your browser does not support HTML5 Canvas.
+        </canvas>
+        <canvas id="layer3"
+            style="z-index: 3; position: absolute; left:750px; top:255px;"
+            height="25px" width="25">
+        </canvas>
+    </div>
+</body>
+</html>

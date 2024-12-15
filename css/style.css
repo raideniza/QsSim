@@ -1,0 +1,55 @@
+@font-face {
+    font-family: osrsFont;
+    src: url('../assets/runescape.ttf');
+}
+
+body {
+    color:aliceblue;
+    font-family: 'osrsFont', sans-serif;
+    font-size: 18px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    background-color: rgb(29, 28, 28);
+}
+
+.slider-container {
+    display: flex;
+    gap: 40px;
+}
+
+.slider {
+    text-align: center;
+}
+
+.slider label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+.slider input[type="range"] {
+    width: 250px;
+    margin-bottom: 1px;
+}
+
+.slider .values {
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+    color:aliceblue;
+    margin-bottom: 20px;
+}
+
+.session-info {
+    display: flex;
+    color: aliceblue;
+    font-size: 18px;
+}
+
+#hiscoreDisplay, #counterDisplay, #previousDisplay {
+    margin: 10px 50px;
+    width: 150px;
+}
