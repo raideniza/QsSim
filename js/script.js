@@ -272,33 +272,40 @@ window.onload = function() {
 
     // Event listener for click events
     canvasElem.addEventListener("mousedown", (event) => {
-        const rect = canvasElem.getBoundingClientRect();
-        const mouseX = event.clientX - rect.left;
-        const mouseY = event.clientY - rect.top;
-    
-        if (showingLobby === false) {
-            missClick(event);
-            setRandomLobby();
-            setTimeout(function () {
-                clickMade = true;
-            }, ping);
-        }
-        else {
-
-            if (ctx1.isPointInPath(mouseX, mouseY)) {
-                ladderClick(event);
-                setTimeout(function () {
-                    ladderClicked = true;
-                    clickMade = true;
-                }, ping);
-            } else {
+        if (event.button === 0) {
+            const rect = canvasElem.getBoundingClientRect();
+            const mouseX = event.clientX - rect.left;
+            const mouseY = event.clientY - rect.top;
+        
+            if (showingLobby === false) {
                 missClick(event);
+                setRandomLobby();
                 setTimeout(function () {
-                    ladderClicked = false;
                     clickMade = true;
                 }, ping);
             }
+            else {
+
+                if (ctx1.isPointInPath(mouseX, mouseY)) {
+                    ladderClick(event);
+                    setTimeout(function () {
+                        ladderClicked = true;
+                        clickMade = true;
+                    }, ping);
+                } else {
+                    missClick(event);
+                    setTimeout(function () {
+                        ladderClicked = false;
+                        clickMade = true;
+                    }, ping);
+                }
+            }
         }
+    });
+
+
+    document.addEventListener("contextmenu", function (event) {
+        event.preventDefault();
     });
 
 }
