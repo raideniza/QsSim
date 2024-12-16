@@ -117,18 +117,12 @@ window.onload = function() {
         setInterval(function () {
             if (showingLobby === true) {
                 ticksElapsedSinceSpawnedInLobby = ticksElapsedSinceSpawnedInLobby + 1;
+                if (ladderClicked === true) {
+                    if (ticksElapsedSinceSpawnedInLobby === 1) {
+                        successfulTrou = true;
+                    }
+                }
                 if (clickMade === true) {
-                    if (ticksElapsedSinceSpawnedInLobby >= 2) {
-                        successfulTrou = false;
-                    }
-                    else {
-                        if (ladderClicked === true) {
-                            successfulTrou = true;
-                        }
-                        else {
-                            successfulTrou = false;
-                        }
-                    }
                     setTimeout(function () {
                         ctx1.clearRect(0, 0, WIDTH, HEIGHT);
                         ctx1.drawImage(in_wave, 0, 0);
@@ -149,7 +143,7 @@ window.onload = function() {
                 if (clickMade === true) {
                     if (lobbyIsLoaded === true) {
                         ticksElapsedSinceSpawnedInLobby = 0;
-                        successfulTrou = true;
+                        successfulTrou = false;
                         ladderClicked = false;
                         setTimeout(function () {
                             drawLobbyAndLadderOutline();
@@ -188,10 +182,6 @@ window.onload = function() {
         redClickTimeout = setTimeout(function () {
             document.body.removeChild(redClick);
         }, 220);
-        
-        setTimeout(function () {
-            clickMade = true;
-        }, ping);
     }
 
 
@@ -212,10 +202,6 @@ window.onload = function() {
         yellowClickTimeout = setTimeout(function () {
             document.body.removeChild(yellowClick);
         }, 220);
-
-        setTimeout(function () {
-            clickMade = true;
-        }, ping);
     }
 
 
@@ -291,17 +277,26 @@ window.onload = function() {
         if (showingLobby === false) {
             missClick(event);
             setRandomLobby();
+            setTimeout(function () {
+                clickMade = true;
+            }, ping);
         }
         else {
 
             if (ctx1.isPointInPath(mouseX, mouseY)) {
                 ladderClick(event);
-                ladderClicked = true;
+                setTimeout(function () {
+                    ladderClicked = true;
+                    clickMade = true;
+                }, ping);
             } else {
                 missClick(event);
+                setTimeout(function () {
+                    ladderClicked = false;
+                    clickMade = true;
+                }, ping);
             }
         }
-        // clickMade = true;
     });
 
 }
