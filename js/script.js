@@ -189,6 +189,7 @@ window.onload = function() {
         redClick.style.left = event.clientX - 8 + "px";
         redClick.style.top = event.clientY - 8 + "px";
         redClick.style.zIndex = 4;
+        redClick.classList.add("noSelect");
 
         if (document.body.contains(redClick)) {
             document.body.removeChild(redClick);
@@ -209,6 +210,7 @@ window.onload = function() {
         yellowClick.style.left = event.clientX - 8 + "px";
         yellowClick.style.top = event.clientY - 8 + "px";
         yellowClick.style.zIndex = 4;
+        yellowClick.classList.add("noSelect");
 
         if (document.body.contains(yellowClick)) {
             document.body.removeChild(yellowClick);
