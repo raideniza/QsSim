@@ -1,15 +1,15 @@
 window.onload = function() {
 
-    var layer1;
-    var layer2;
-    var layer3;
+    var mainCanvas;
+    var inventoryCanvas;
+    var tickCounterCanvas;
+    var animationCanvas;
 
-    var ctx1;
-    var ctx2;
-    var ctx3;
+    var mainContext;
+    var inventoryContext;
+    var tickCounterContext;
+    var animationContext;
 
-    var WIDTH = 783;
-    var HEIGHT = 566;
     var lobby = new Image();
     var inventory = new Image();
     var in_wave = new Image();
@@ -43,6 +43,16 @@ window.onload = function() {
     var currentStreak = 0;
     var previousStreak = 0;
     var highestStreak = 0;
+
+    var startTime;
+    var endTime;
+    var clickTime;
+    var differential;
+    const activeAnimations = [];
+    var xpDropColor;
+    var xpDropText;
+    var blue = '#2127ca';
+    var red = '#d2042d';
 
     var wave = "Wave 2";
     var camera = "North";
@@ -89,25 +99,30 @@ window.onload = function() {
         redClick.src = "./assets/red_click.gif";
         yellowClick.src = "./assets/yellow_click.gif";
 
-        layer1 = document.getElementById("layer1");
-        ctx1 = layer1.getContext("2d");
+        mainCanvas = document.getElementById("mainCanvas");
+        mainContext = mainCanvas.getContext("2d");
         
-        layer2 = document.getElementById("layer2");
-        ctx2 = layer2.getContext("2d");
+        inventoryCanvas = document.getElementById("inventoryCanvas");
+        inventoryContext = inventoryCanvas.getContext("2d");
 
-        layer3 = document.getElementById("layer3");
-        ctx3 = layer3.getContext("2d");
+        tickCounterCanvas = document.getElementById("tickCounterCanvas");
+        tickCounterContext = tickCounterCanvas.getContext("2d");
+
+        animationCanvas = document.getElementById("animationCanvas");
+        animationContext = animationCanvas.getContext("2d");
+
+        animationContext.font = 'bold 48px osrsFont';
 
         // background is 783 x 566
         in_wave.onload = function () {
-            ctx1.clearRect(0, 0, WIDTH, HEIGHT);
-            ctx1.drawImage(in_wave, 0, 0);
+            mainContext.clearRect(0, 0, mainCanvas.width, mainCanvas.height);
+            mainContext.drawImage(in_wave, 0, 0);
         }
 
         // inventory is 204 x 275
         inventory.onload = function () {
-            ctx2.clearRect(0, 0, 204, 275);
-            ctx2.drawImage(inventory, 0, 0);
+            inventoryContext.clearRect(0, 0, 204, 275);
+            inventoryContext.drawImage(inventory, 0, 0);
         }
 
         gameTick();
@@ -126,8 +141,8 @@ window.onload = function() {
                 }
                 if (clickMade === true) {
                     setTimeout(function () {
-                        ctx1.clearRect(0, 0, WIDTH, HEIGHT);
-                        ctx1.drawImage(in_wave, 0, 0);
+                        mainContext.clearRect(0, 0, mainCanvas.width, mainCanvas.height);
+                        mainContext.drawImage(in_wave, 0, 0);
                         showingLobby = false;
                         
                         if (successfulTrou === false) {
@@ -151,14 +166,15 @@ window.onload = function() {
                             drawLobbyAndLadderOutline();
                             showingLobby = true;
                         }, loadTime);
+                        startTime = performance.now();
                     }
                 }
             }
 
             if (tickCounterEnabled === true) {
                 tickCounterIsWhite = !tickCounterIsWhite;
-                let color = tickCounterIsWhite ? 'white' : 'black';
-                drawTickCounterSquare(color);
+                let tickCounterColor = tickCounterIsWhite ? 'white' : 'black';
+                drawTickCounterSquare(tickCounterColor);
             }
 
             clickMade = false;
@@ -210,12 +226,12 @@ window.onload = function() {
     function setRandomLobby() {
         randInt = Math.floor(Math.random() * files.length);
         
-        ctx1.beginPath();
-        ctx1.moveTo(ladderClickbox[wave][camera][zoom][randInt][0]['x'], ladderClickbox[wave][camera][zoom][randInt][0]['y']);
+        mainContext.beginPath();
+        mainContext.moveTo(ladderClickbox[wave][camera][zoom][randInt][0]['x'], ladderClickbox[wave][camera][zoom][randInt][0]['y']);
         for (let i = 1; i < ladderClickbox[wave][camera][zoom][randInt].length; i++) {
-            ctx1.lineTo(ladderClickbox[wave][camera][zoom][randInt][i]['x'], ladderClickbox[wave][camera][zoom][randInt][i]['y']);
+            mainContext.lineTo(ladderClickbox[wave][camera][zoom][randInt][i]['x'], ladderClickbox[wave][camera][zoom][randInt][i]['y']);
         }
-        ctx1.closePath();
+        mainContext.closePath();
 
         url = path + files[randInt];
 
@@ -229,21 +245,21 @@ window.onload = function() {
 
 
     function drawLobbyAndLadderOutline() {
-        ctx1.clearRect(0, 0, WIDTH, HEIGHT);
-        ctx1.drawImage(lobby, 0, 0);
+        mainContext.clearRect(0, 0, mainCanvas.width, mainCanvas.height);
+        mainContext.drawImage(lobby, 0, 0);
 
         if (drawOutline === true) {
-            ctx1.strokeStyle = "red";
-            ctx1.lineWidth = 0.8;
-            ctx1.stroke();
+            mainContext.strokeStyle = "red";
+            mainContext.lineWidth = 0.8;
+            mainContext.stroke();
         }
     }
 
 
     function drawTickCounterSquare(color) {
-        ctx3.clearRect(0, 0, 25, 25);
-        ctx3.fillStyle = color;
-        ctx3.fillRect(0, 0, 25, 25);
+        tickCounterContext.clearRect(0, 0, 25, 25);
+        tickCounterContext.fillStyle = color;
+        tickCounterContext.fillRect(0, 0, 25, 25);
     }
 
 
@@ -265,15 +281,56 @@ window.onload = function() {
     }
 
 
+    function prepareXpDrop(text, color, startX, startY) {
+        return {
+            text: text,
+            color: color,
+            x: startX,
+            y: startY,
+            alpha: 1
+        };
+    }
+
+
+    function animateClickSpeedAsXpDrop() {
+        animationContext.clearRect(0, 0, animationCanvas.width, animationCanvas.height);
+
+        activeAnimations.forEach((anim, index) => {
+            animationContext.fillStyle = `rgba(${hexToRgb(anim.color)}, ${anim.alpha})`;
+            animationContext.fillText(anim.text, anim.x, anim.y);
+
+            anim.y -= 2;
+            if (anim.y < 50) {
+                anim.alpha -= 0.02;
+            }
+
+            if (anim.alpha <= 0) {
+                activeAnimations.splice(index, 1);
+            }
+        });
+
+        // Continue the animation loop
+        requestAnimationFrame(animateClickSpeedAsXpDrop);
+    }
+
+
+    function hexToRgb(hex) {
+        const bigint = parseInt(hex.slice(1), 16);
+        const r = (bigint >> 16) & 255;
+        const g = (bigint >> 8) & 255;
+        const b = bigint & 255;
+        return `${r}, ${g}, ${b}`;
+    }
+
+
     init();
+    animateClickSpeedAsXpDrop();
 
-
-    let canvasElem = document.querySelector("canvas");
 
     // Event listener for click events
-    canvasElem.addEventListener("mousedown", (event) => {
+    mainCanvas.addEventListener("mousedown", (event) => {
         if (event.button === 0) {
-            const rect = canvasElem.getBoundingClientRect();
+            const rect = mainCanvas.getBoundingClientRect();
             const mouseX = event.clientX - rect.left;
             const mouseY = event.clientY - rect.top;
         
@@ -285,8 +342,22 @@ window.onload = function() {
                 }, ping);
             }
             else {
+                endTime = performance.now();
+                clickTime = endTime - startTime;
+                differential = clickTime + Number(ping) - 600;
 
-                if (ctx1.isPointInPath(mouseX, mouseY)) {
+                if (differential <= 0) {
+                    xpDropColor = blue;
+                    xpDropText = String(differential) + " ms";
+                }
+                else {
+                    xpDropColor = red;
+                    xpDropText = "+" + String(differential) + " ms";
+                }
+                const newXpDrop = prepareXpDrop(xpDropText, xpDropColor, 525, 250);
+                activeAnimations.push(newXpDrop);
+
+                if (mainContext.isPointInPath(mouseX, mouseY)) {
                     ladderClick(event);
                     setTimeout(function () {
                         ladderClicked = true;

@@ -48,19 +48,24 @@
     </div>
 
     <div id="canvasesdiv" style="position:relative; width:783px; height:566px">
-        <canvas id="layer1"
+        <canvas id="mainCanvas"
             style="z-index: 1; position:absolute; left:0px; top:0px;"
             height="566px" width="783">
             This text is displayed if your browser does not support HTML5 Canvas.
         </canvas>
-        <canvas id="layer2"
+        <canvas id="inventoryCanvas"
             style="z-index: 2; position:absolute; left:579px; top:291px;"
             height="275px" width="204">
             This text is displayed if your browser does not support HTML5 Canvas.
         </canvas>
-        <canvas id="layer3"
+        <canvas id="tickCounterCanvas"
             style="z-index: 3; position: absolute; left:750px; top:255px;"
             height="25px" width="25">
+        </canvas>
+        <canvas id="animationCanvas"
+            style="z-index: 10; pointer-events: none; position:absolute; left:0px; top:0px;"
+            height="566px" width="783">
+            This text is displayed if your browser does not support HTML5 Canvas.
         </canvas>
     </div>
 </body>
