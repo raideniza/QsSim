@@ -343,7 +343,7 @@ window.onload = function() {
             }
             else {
                 endTime = performance.now();
-                clickTime = endTime - startTime;
+                clickTime = Math.floor(endTime) - Math.floor(startTime);
                 differential = clickTime + Number(ping) - 600;
 
                 if (differential <= 0) {
