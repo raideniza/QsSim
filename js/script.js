@@ -255,6 +255,7 @@ window.onload = function() {
             mainContext.lineWidth = 0.8;
             mainContext.stroke();
         }
+
     }
 
 
@@ -325,6 +326,8 @@ window.onload = function() {
     }
 
 
+
+
     init();
     animateClickSpeedAsXpDrop();
 
@@ -338,12 +341,14 @@ window.onload = function() {
         
             if (showingLobby === false) {
                 missClick(event);
-                setRandomLobby();
                 setTimeout(function () {
-                    clickMade = true;
+                    if (showingLobby === false) {
+                        setRandomLobby();
+                        clickMade = true;
+                    }
                 }, ping);
             }
-            else {
+            else { // showingLobby === true
                 endTime = performance.now();
                 clickTime = Math.floor(endTime) - Math.floor(startTime);
                 differential = clickTime + Number(ping) - 600;
@@ -362,14 +367,18 @@ window.onload = function() {
                 if (mainContext.isPointInPath(mouseX, mouseY)) {
                     ladderClick(event);
                     setTimeout(function () {
-                        ladderClicked = true;
-                        clickMade = true;
+                        if (showingLobby === true) {
+                            ladderClicked = true;
+                            clickMade = true;
+                        }
                     }, ping);
                 } else {
                     missClick(event);
                     setTimeout(function () {
-                        ladderClicked = false;
-                        clickMade = true;
+                        if (showingLobby === true) {
+                            ladderClicked = false;
+                            clickMade = true;
+                        }
                     }, ping);
                 }
             }
