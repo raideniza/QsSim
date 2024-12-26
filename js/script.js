@@ -342,10 +342,8 @@ window.onload = function() {
             if (showingLobby === false) {
                 missClick(event);
                 setTimeout(function () {
-                    if (showingLobby === false) {
-                        setRandomLobby();
-                        clickMade = true;
-                    }
+                    setRandomLobby();
+                    clickMade = true;
                 }, ping);
             }
             else { // showingLobby === true
@@ -367,18 +365,14 @@ window.onload = function() {
                 if (mainContext.isPointInPath(mouseX, mouseY)) {
                     ladderClick(event);
                     setTimeout(function () {
-                        if (showingLobby === true) {
-                            ladderClicked = true;
-                            clickMade = true;
-                        }
+                        ladderClicked = true;
+                        clickMade = true;
                     }, ping);
                 } else {
                     missClick(event);
                     setTimeout(function () {
-                        if (showingLobby === true) {
-                            ladderClicked = false;
-                            clickMade = true;
-                        }
+                        ladderClicked = false;
+                        clickMade = true;
                     }, ping);
                 }
             }
