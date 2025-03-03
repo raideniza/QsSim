@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+<head>
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="./js/prototype.js"></script>
+    <meta charset="UTF-8" />
+    <title>Prototype Qs Sim</title>
+</head>
+<body>
+    <div id="instructionsContainer">
+        <ul>
+            <li>Testing New Stuff Wooooo</li>
+        </ul>
+    </div>
+
+    <div class="options-container">
+        <label for="wave">Wave:</label>
+        <select id="wave" autocomplete="off">
+            <option value="2" selected>2</option>
+            <option value="3" disabled>3</option>
+        </select>
+
+        <label for="direction">Camera Direction:</label>
+        <select id="direction" autocomplete="off">
+            <option value="North" selected>North</option>
+            <option value="South">South</option>
+            <option value="East">East</option>
+            <option value="Southeast">Southeast</option>
+        </select>
+
+        <label for="height">Camera Height:</label>
+        <select id="height" autocomplete="off">
+            <option value="High" selected>High</option>
+            <option value="Medium">Medium</option>
+            <option value="Low">Low</option>
+        </select>
+
+        <label for="zoom">Zoom Level:</label>
+        <select id="zoom" autocomplete="off">
+            <option value="Zoomed Out">Out</option>
+            <option value="Zoomed Middle" selected>Middle</option>
+            <option value="Zoomed In">In</option>
+        </select>
+    </div>
+
+    <div class="slider-container">
+        <div class="slider">
+            <label for="ping">Ping</label>
+            <input autocomplete="off" type="range" id="ping" min="0" max="400" value="50">
+            <div class="values">
+                <span>0</span>
+                <span id="ping-value">50 ms</span>
+                <span>400</span>
+            </div>
+        </div>
+
+        <div class="slider">
+            <label for="load-time">Load Time</label>
+            <input autocomplete="off" type="range" id="load-time" min="0" max="200" step="20" value="20">
+            <div class="values">
+                <span>0</span>
+                <span id="load-time-value">20 ms</span>
+                <span>200</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="session-info">
+        <div id="hiscoreDisplay">Highest streak: 0</div>
+        <div id="previousDisplay">Previous streak: 0</div>
+        <div id="counterDisplay">Current streak: 0</div>
+    </div>
+
+    <div id="canvasesdiv" style="position:relative; width:783px; height:566px">
+        <canvas id="mainCanvas"
+            style="z-index: 1; position:absolute; left:0px; top:0px;"
+            height="565px" width="790px">
+            This text is displayed if your browser does not support HTML5 Canvas.
+        </canvas>
+        <canvas id="inventoryCanvas"
+            style="z-index: 2; position:absolute; left:550px; top:230px;"
+            height="331px" width="236px">
+            This text is displayed if your browser does not support HTML5 Canvas.
+        </canvas>
+    </div>
+</body>
+</html>

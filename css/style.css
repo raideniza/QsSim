@@ -43,6 +43,13 @@ body {
     margin-bottom: 20px;
 }
 
+.options-container {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Add spacing between dropdowns */
+    margin: 10px;
+}
+
 .session-info {
     display: flex;
     color: aliceblue;
@@ -63,6 +70,7 @@ body {
     -ms-user-select: none;
     user-select: none;
 }
+
 .noSelect:focus {
     outline: none !important;
 }
