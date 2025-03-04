@@ -12,6 +12,7 @@ window.onload = function() {
 
     var lobby = new Image();
     var inventory = new Image();
+    var pointScreen = new Image();
     var in_wave = new Image();
     var redClick = new Image();
     var yellowClick = new Image();
@@ -20,7 +21,7 @@ window.onload = function() {
     // path can be in either Zoomed Out, Average, or Zoomed In
     // path can be in either north, south, east, or southeast
 
-    var path = "./assets/Wave 2/Zoomed Out/";
+    var path = "./assets/Wave 2_OLD/Zoomed Out/";
 
     var files = ['01.png', '02.png', '02.png', '03.png', '03.png', '03.png', '04.png', '05.png', '06.png', '07.png',
         '08.png', '09.png', '09.png', '09.png', '10.png', '11.png', '12.png', '13.png', '14.png', '15.png', '15.png',
@@ -95,6 +96,7 @@ window.onload = function() {
         clickMade = false;
 
         inventory.src = "./assets/inventory.png";
+        // pointScreen.src = "./assets/point_screen.png";
         in_wave.src = "./assets/wave.png";
         redClick.src = "./assets/red_click.gif";
         yellowClick.src = "./assets/yellow_click.gif";
@@ -104,6 +106,9 @@ window.onload = function() {
         
         inventoryCanvas = document.getElementById("inventoryCanvas");
         inventoryContext = inventoryCanvas.getContext("2d");
+
+        // pointScreenCanvas = document.getElementById("pointScreenCanvas");
+        // pointScreenContext = pointScreenCanvas.getContext("2d");
 
         tickCounterCanvas = document.getElementById("tickCounterCanvas");
         tickCounterContext = tickCounterCanvas.getContext("2d");
@@ -164,6 +169,7 @@ window.onload = function() {
                         ladderClicked = false;
                         setTimeout(function () {
                             drawLobbyAndLadderOutline();
+                            // drawPointScreen();
                             showingLobby = true;
                         }, loadTime);
                         startTime = performance.now();
@@ -255,7 +261,12 @@ window.onload = function() {
             mainContext.lineWidth = 0.8;
             mainContext.stroke();
         }
+    }
 
+
+    function drawPointScreen() {
+        pointScreenContext.clearRect(0, 0, pointScreenCanvas.width, pointScreenCanvas.height);
+        pointScreenContext.drawImage(pointScreen, 0, 0);
     }
 
 
