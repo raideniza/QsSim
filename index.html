@@ -2,23 +2,72 @@
 <html>
 <head>
     <link rel="stylesheet" href="./css/style.css">
-    <script src="./js/script.js"></script>
+    <script type="module" src="./js/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/omggif@1.0.10/omggif.js"></script>
     <meta charset="UTF-8" />
-    <title>Qs Simulator</title>
+    <title>Final Qs Sim</title>
 </head>
 <body>
     <div id="instructionsContainer">
         <ul>
-            <li>Pretend that lumby is you holding a prayer inside the wave.
-            <br>
-            <li>Click to show the lobby. Try to trou by clicking on the ladder.
-            <br>
-            <li>Doing a successful trou (red x'ing the ladder and not being late) will add to your streak.
-            <br>
-            <li>Zooming in the page will break it. An actual customized zoom update will come soon.
-            <br>
-            <li>Development ongoing</li>
+            <li>Testing New Stuff Wooooo</li>
         </ul>
+    </div>
+
+    <div class="options-container">
+        <div class="option-group">
+            <label for="wave">Wave:</label>
+            <select id="wave" autocomplete="off">
+                <option value="Wave 2" selected>2</option>
+                <option value="Wave 3" disabled>3</option>
+            </select>
+        </div>
+
+        <div class="option-group">
+            <label for="zoom">Zoom Level:</label>
+            <select id="zoom" autocomplete="off">
+                <option value="Low Zoom">Low</option>
+                <option value="Medium Zoom" selected>Medium</option>
+                <option value="High Zoom">High</option>
+                <option value="Very High Zoom">Very High</option>
+            </select>
+        </div>
+
+        <div class="option-group">
+            <label for="highlight">Highlight Ladder:</label>
+            <select id="highlight" autocomplete="off">
+                <option value="Highlight" selected>On</option>
+                <option value="No Highlight">Off</option>
+            </select>
+        </div>
+
+        <div class="option-group">
+            <label for="direction">Camera Direction:</label>
+            <select id="direction" autocomplete="off">
+                <option value="North" selected>North</option>
+                <option value="South">South</option>
+                <option value="East">East</option>
+                <option value="Southeast">Southeast</option>
+            </select>
+        </div>
+
+        <div class="option-group">
+            <label for="height">Camera Height:</label>
+            <select id="height" autocomplete="off">
+                <option value="High Height" selected>High</option>
+                <option value="Medium Height">Medium</option>
+                <option value="Low Height">Low</option>
+                <option value="Very Low Height">Very Low</option>
+            </select>
+        </div>
+
+        <div class="option-group">
+            <label for="tiles">Spawn Tiles:</label>
+            <select id="tiles" autocomplete="off">
+                <option value="Destination Qs">Dest Qs Tiles Only</option>
+                <option value="No Destination Qs" selected>All Tiles</option>
+            </select>
+        </div>
     </div>
 
     <div class="slider-container">
@@ -43,36 +92,26 @@
         </div>
     </div>
 
-    <div class="session-info">
-        <div id="hiscoreDisplay">Highest streak: 0</div>
-        <div id="previousDisplay">Previous streak: 0</div>
-        <div id="counterDisplay">Current streak: 0</div>
-    </div>
-
     <div id="canvasesdiv" style="position:relative; width:783px; height:566px">
-        <canvas id="mainCanvas"
+        <canvas id="backgroundCanvas"
             style="z-index: 1; position:absolute; left:0px; top:0px;"
-            height="566px" width="783">
+            height="565px" width="790px">
             This text is displayed if your browser does not support HTML5 Canvas.
         </canvas>
         <canvas id="inventoryCanvas"
-            style="z-index: 2; position:absolute; left:579px; top:291px;"
-            height="275px" width="204">
+            style="z-index: 2; position:absolute; left:550px; top:230px;"
+            height="331px" width="236px">
             This text is displayed if your browser does not support HTML5 Canvas.
-        </canvas>
-        <!-- <canvas id="pointScreenCanvas"
-            style="z-index: 2; position:absolute; left:0px; top:0px;"
-            height="284px" width="501">
-        </canvas> -->
-        <canvas id="tickCounterCanvas"
-            style="z-index: 3; position: absolute; left:750px; top:255px;"
-            height="25px" width="25">
         </canvas>
         <canvas id="animationCanvas"
-            style="z-index: 10; pointer-events: none; position:absolute; left:0px; top:0px;"
-            height="566px" width="783">
-            This text is displayed if your browser does not support HTML5 Canvas.
+            style="z-index: 3; pointer-events: none; position: absolute; left:0px; top:0px;"
+            height="565px" width="790px">
+        </canvas>
+        <canvas id="tickCounterCanvas"
+            style="z-index: 4; position: absolute; left:700px; top:185px;"
+            height="25px" width="25">
         </canvas>
     </div>
+    <div id="coords"></div>
 </body>
 </html>
