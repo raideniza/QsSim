@@ -443,6 +443,7 @@ window.onload = async function () {
         drawInventory();
     }, 600);
     
+    prepareRandomLobby();
     gameTick();
 
 
@@ -465,6 +466,7 @@ window.onload = async function () {
                     queueMove = false;
                     pointScreenIsOpen = false;
                     currentScreen = 'wave';
+                    prepareRandomLobby();
                 }
                 else if (numberOfTicksElapsedInLobby === 2 && queueBranch === true) {
                     PointScreenContext.drawImage(point_screen, 30, 63);
@@ -495,11 +497,11 @@ window.onload = async function () {
                 }, loadTime);
             }
 
-            else {
-                if (lobbyPreparedFlag === false) {
-                    prepareRandomLobby()
-                }
-            }
+            // else {
+            //     if (lobbyPreparedFlag === false) {
+            //         prepareRandomLobby()
+            //     }
+            // }
 
             tickCounterIsWhite = !tickCounterIsWhite;
             let tickCounterColor = tickCounterIsWhite ? 'white' : 'black';
@@ -580,6 +582,7 @@ window.onload = async function () {
         queueMove = false;
         queueBranch = false;
         currentScreen = "wave";
+        prepareRandomLobby();
     }
 
 
