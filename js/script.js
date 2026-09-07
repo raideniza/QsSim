@@ -9,6 +9,7 @@ window.onload = async function () {
     var branch = new Image();
     var use_knife = new Image();
     var use_branch = new Image();
+    var stink_bomb = new Image();
     var point_screen = new Image();
 
     var path = "./qs/Wave 2/North/Medium Zoom/High Height/Highlight/No Destination Qs/";
@@ -62,6 +63,18 @@ window.onload = async function () {
 
     tilesDropdown.onchange = ( () => {
         updateFilePath(waveDropdown.value, directionDropdown.value, heightDropdown.value, zoomDropdown.value, highlightDropdown.value, tilesDropdown.value);
+    });
+
+    const itemModeDropdown = document.getElementById("item-mode");
+    var stinkBombMode = false;
+
+    itemModeDropdown.onchange = (() => {
+        stinkBombMode = itemModeDropdown.value === "stink-bomb";
+        knifeUsed = false;
+        branchUsed = false;
+        inventory[1][0] = stinkBombMode ? 's' : 'k';
+        inventory[2][0] = stinkBombMode ? '' : 'b';
+        drawInventory();
     });
 
 
@@ -121,6 +134,7 @@ window.onload = async function () {
     branch.src = "./assets/branch.png";
     use_knife.src = "./assets/use_knife.png";
     use_branch.src = "./assets/use_branch.png";
+    stink_bomb.src = "./assets/stink_bomb.png";
     point_screen.src = "./assets/point_screen.png";
 
 
@@ -260,6 +274,9 @@ window.onload = async function () {
                 else if (inventory[i][j] === 'b') {
                     inventoryUseItemContext.drawImage(branch, x, y);
                 }
+                else if (inventory[i][j] === 's') {
+                    inventoryUseItemContext.drawImage(stink_bomb, x, y);
+                }
             }
         }
     }
@@ -370,6 +387,25 @@ window.onload = async function () {
                 inventoryUseItemContext.drawImage(use_branch, draw_x, draw_y);
                 branchUsed = true;
             }
+        }
+        else if (inventory[row_index][col_index] === 's') {
+            endTime = performance.now();
+            clickTime = Math.floor(endTime) - Math.floor(startTime);
+            differential = clickTime + Number(ping) - 1200;
+
+            if (differential <= 0) {
+                xpDropColor = blue;
+                xpDropText = String(differential) + " ms";
+            }
+            else {
+                xpDropColor = red;
+                xpDropText = "+" + String(differential) + " ms";
+            }
+            const newXpDrop = prepareXpDrop(xpDropText, xpDropColor, 525, 250);
+            activeAnimations.push(newXpDrop);
+            setTimeout(() => {
+                queueBranch = true;
+            }, ping);
         }
     }
 
